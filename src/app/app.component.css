@@ -1,0 +1,8 @@
+.container-layout {
+  height: 100vh;
+  display: flex;
+}
+main {
+  width: 100%;
+  background-color: #eeeeee;
+}

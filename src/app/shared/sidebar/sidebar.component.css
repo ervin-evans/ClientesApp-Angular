@@ -1,6 +1,6 @@
 aside {
   background-color: #212121;
-  height: 100vh;
+  height: 100%;
   max-width: 300px;
 }
 .hr-logo {
@@ -27,6 +27,7 @@ li {
 }
 li:hover {
   cursor: pointer;
+  background-color: #43a047;
 }
 li a:focus {
   background-color: #43a047;
