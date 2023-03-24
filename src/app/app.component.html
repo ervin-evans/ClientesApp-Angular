@@ -3,7 +3,9 @@
     <app-sidebar id="sidebar"></app-sidebar>
     <main class="main-content">
       <app-navbar></app-navbar>
-      <div class="container">contenido principal</div>
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
       <app-footer
         class="position-fixed bottom-0 left-0 w-100"
         id="footer"
