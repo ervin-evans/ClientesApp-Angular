@@ -1,0 +1,9 @@
+.page-link {
+  cursor: pointer;
+}
+.active {
+  background-color: #dc3545;
+}
+.page-link {
+  border: none;
+}

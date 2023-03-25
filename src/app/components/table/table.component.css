@@ -1,0 +1,16 @@
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgb(217, 235, 235);
+}
+.table-hover tbody tr:hover {
+  background-color: rgba(127, 199, 130);
+  color: rgb(112, 24, 78);
+}
+
+.thead-green {
+  background-color: #d9ebeb;
+  color: white;
+}
+
+th {
+  padding: 8px 10px;
+}

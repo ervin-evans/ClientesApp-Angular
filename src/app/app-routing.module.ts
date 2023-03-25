@@ -8,7 +8,13 @@ import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 const routes: Routes = [
   { path: '', component: UsuariosComponent },
   { path: 'usuarios', component: UsuariosComponent },
-  { path: 'clientes', component: ClientesComponent },
+  {
+    path: 'clientes',
+    loadChildren: () =>
+      import('./pages/clientes/clientes-routing.module').then(
+        (m) => m.ClientesModule
+      ),
+  },
   { path: 'facturas', component: FacturasComponent },
   { path: 'productos', component: ProductosComponent },
   { path: '', component: UsuariosComponent, pathMatch: 'full' },
