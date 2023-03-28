@@ -9,6 +9,15 @@
   <tbody>
     <tr *ngFor="let item of items">
       <th scope="row">{{ item.id }}</th>
+      <td>
+        <a href="">
+          <img
+            class="avatar"
+            [src]="'http://localhost:8080/clientes/image/uploads/' + item.foto"
+            [alt]="item.foto"
+          />
+        </a>
+      </td>
       <td>{{ item.nombre }}</td>
       <td>{{ item.apellidoPaterno }}</td>
       <td>{{ item.apellidoMaterno }}</td>
@@ -59,7 +68,7 @@
 </table>
 
 <!--===============================================================================-->
-<!--MODAL-->
+<!--MODAL DE CLIENTES-->
 <!--===============================================================================-->
 <app-modal-client
   class="modal animate__animated animate__bounceIn"
@@ -71,3 +80,7 @@
   [regiones]="regiones"
   (isClienteUpdated)="updateTable($event)"
 ></app-modal-client>
+
+<!--===============================================================================-->
+<!--MODAL DE UPLOAD IMAGE-->
+<!--===============================================================================-->

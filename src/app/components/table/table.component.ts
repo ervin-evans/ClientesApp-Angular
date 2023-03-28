@@ -15,16 +15,27 @@ export class TableComponent implements OnInit {
   @Input() public tableColumns: string[] = [];
   @Input() public items: Cliente[] = [];
   @Input() public actualPage: number = 1;
+  @Input() public cliente: Cliente = new Cliente();
+
   protected regiones: Region[] = [];
-  protected cliente: Cliente = new Cliente();
   constructor(
     private regionesService: RegionesService,
     private clientesService: ClienteService,
     private spinner: NgxSpinnerService
   ) {}
   ngOnInit(): void {
-    this.regionesService.getRegiones().subscribe((regiones) => {
-      this.regiones = regiones;
+    this.regionesService.getRegiones().subscribe({
+      next: (regiones) => {
+        this.regiones = regiones;
+      },
+      error: (err) => {
+        console.log(err);
+        Swal.fire({
+          title: 'Oops!',
+          text: 'Ha ocurrido un error al intentar cargar las regiones',
+          icon: 'error',
+        });
+      },
     });
   }
 
@@ -32,7 +43,6 @@ export class TableComponent implements OnInit {
     this.cliente = cliente;
   }
   public delete(cliente: Cliente) {
-    console.log(cliente);
     Swal.fire({
       title: 'Estas seguro?',
       text: `Realmente deseas borrar a ${cliente.nombre} ${cliente.apellidoPaterno} ${cliente.apellidoMaterno}!`,

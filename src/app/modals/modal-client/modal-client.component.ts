@@ -7,6 +7,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,6 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Cliente } from 'src/app/models/Cliente';
 import { Region } from 'src/app/models/region';
 import { ClienteService } from 'src/app/services/cliente.service';
+import { ModalsService } from 'src/app/services/modals.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -26,22 +28,36 @@ export class ModalClientComponent implements OnInit, OnChanges, OnDestroy {
   cliente: Cliente = new Cliente();
   @Input()
   regiones: Region[] = [];
-  private clienteToSave: Cliente = new Cliente();
-  protected formCliente: FormGroup = new FormGroup([]);
   @Output()
   public isClienteUpdated: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  public modalTitle: string = '';
+
+  private clienteToSave: Cliente = new Cliente();
+  protected formCliente: FormGroup = new FormGroup([]);
 
   constructor(
     private formBuilder: FormBuilder,
     private clienteService: ClienteService,
-    private spinner: NgxSpinnerService,
-    private router: Router,
-    private location: Location
+    private modalService: ModalsService,
+    private spinner: NgxSpinnerService
   ) {}
   ngOnDestroy(): void {}
 
   ngOnInit(): void {}
-  ngOnChanges(): void {
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['cliente']) {
+      const { id } = changes['cliente'].currentValue;
+      if (id === 0) {
+        this.modalTitle = 'Agregar cliente';
+      } else {
+        this.modalTitle = 'Actualizar cliente';
+      }
+    }
+    this.createForm();
+  }
+  private createForm(): void {
     this.formCliente = this.formBuilder.group({
       nombre: [
         this.cliente.nombre,
@@ -89,13 +105,7 @@ export class ModalClientComponent implements OnInit, OnChanges, OnDestroy {
   public update(): void {
     const { nombre, email, apellidoPaterno, apellidoMaterno, region } =
       this.formCliente.value;
-    this.clienteToSave.id = this.cliente.id;
-    this.clienteToSave.nombre = nombre;
-    this.clienteToSave.apellidoPaterno = apellidoPaterno;
-    this.clienteToSave.apellidoMaterno = apellidoMaterno;
-    this.clienteToSave.email = email;
-    this.clienteToSave.region.id = +region;
-    console.log(this.clienteToSave);
+    this.setCliente(nombre, apellidoPaterno, apellidoMaterno, email, region);
     this.spinner.show();
     this.clienteService.update(this.clienteToSave).subscribe({
       next: (resp) => {
@@ -116,5 +126,47 @@ export class ModalClientComponent implements OnInit, OnChanges, OnDestroy {
         });
       },
     });
+  }
+
+  public save(): void {
+    const { nombre, email, apellidoPaterno, apellidoMaterno, region } =
+      this.formCliente.value;
+    this.setCliente(nombre, apellidoPaterno, apellidoMaterno, email, region);
+    console.log('Vamos a guardar un cliente', this.clienteToSave);
+    this.clienteService.save(this.clienteToSave).subscribe({
+      next: (resp) => {
+        console.log(resp);
+        this.isClienteUpdated.emit(true);
+        this.modalService.closeModal();
+        Swal.fire({
+          title: 'Enhora buena!',
+          text: resp.msg,
+          icon: 'success',
+        });
+      },
+      error: (err) => {
+        console.log(err),
+          Swal.fire({
+            title: 'Oops!',
+            text: err.error.msg,
+            icon: 'error',
+          });
+      },
+    });
+  }
+
+  private setCliente(
+    nombre: string = '',
+    apellidoPaterno: string = '',
+    apellidoMaterno: string = '',
+    email: string = '',
+    regionId: string = ''
+  ) {
+    this.clienteToSave.id = this.cliente.id;
+    this.clienteToSave.nombre = nombre;
+    this.clienteToSave.apellidoPaterno = apellidoPaterno;
+    this.clienteToSave.apellidoMaterno = apellidoMaterno;
+    this.clienteToSave.email = email;
+    this.clienteToSave.region.id = +regionId;
   }
 }

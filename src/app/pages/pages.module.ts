@@ -5,8 +5,8 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { FacturasComponent } from './facturas/facturas.component';
 import { ProductosComponent } from './productos/productos.component';
 import { ComponentsModule } from '../components/components.module';
-import { NgxSpinnerModule } from 'ngx-spinner/lib/ngx-spinner.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalClientComponent } from '../modals/modal-client/modal-client.component';
+import { ModalsModule } from '../modals/modals.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FacturasComponent,
     ProductosComponent,
   ],
-  imports: [CommonModule, ComponentsModule],
+  imports: [CommonModule, ComponentsModule, ModalsModule],
 
   exports: [UsuariosComponent],
 })

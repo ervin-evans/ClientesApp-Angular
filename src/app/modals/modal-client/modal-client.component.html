@@ -1,15 +1,7 @@
 <div class="modal-dialog modal-md modal-dialog-centered">
   <div class="modal-content">
     <div class="modal-header">
-      <h1 class="modal-title fs-5" id="exampleModalLabel">
-        Actualizar Cliente
-      </h1>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="modal"
-        aria-label="Close"
-      ></button>
+      <h1 class="modal-title fs-5" id="exampleModalLabel">{{ modalTitle }}</h1>
     </div>
     <div class="modal-body">
       <form [formGroup]="formCliente" class="needs-validation" novalidate>
@@ -22,7 +14,7 @@
                 id=""
                 formControlName="nombre"
                 class="form-control mb-3"
-                [ngClass]="errors('nombre') ? 'form-invalid' : 'form-valid'"
+                [ngClass]="errors('nombre') ? 'form-invalid' : ''"
                 placeholder="Nombre"
               />
               <div
@@ -50,9 +42,7 @@
                 id=""
                 formControlName="apellidoPaterno"
                 class="form-control mb-3"
-                [ngClass]="
-                  errors('apellidoPaterno') ? 'form-invalid' : 'form-valid'
-                "
+                [ngClass]="errors('apellidoPaterno') ? 'form-invalid' : ''"
                 placeholder="Apellido paterno"
               />
               <div
@@ -80,9 +70,7 @@
                 id=""
                 formControlName="apellidoMaterno"
                 class="form-control mb-3"
-                [ngClass]="
-                  errors('apellidoMaterno') ? 'form-invalid' : 'form-valid'
-                "
+                [ngClass]="errors('apellidoMaterno') ? 'form-invalid' : ''"
                 placeholder="Apellido Materno"
               />
               <div
@@ -123,7 +111,7 @@
                 id=""
                 formControlName="email"
                 class="form-control mb-3"
-                [ngClass]="errors('email') ? 'form-invalid' : 'form-valid'"
+                [ngClass]="errors('email') ? 'form-invalid' : ''"
                 placeholder="E-mail"
               />
               <div
@@ -156,11 +144,21 @@
       </button>
       <!--TODO: Verificar cliente-->
       <button
+        *ngIf="cliente.id !== 0"
         type="button"
         class="btn btn-primary"
         (click)="update()"
         [disabled]="formCliente.invalid"
         data-bs-dismiss="modal"
+      >
+        Actualizar Cliente
+      </button>
+      <button
+        *ngIf="cliente.id === 0"
+        type="button"
+        class="btn btn-primary"
+        (click)="save()"
+        [disabled]="formCliente.invalid"
       >
         Guardar Cliente
       </button>

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Cliente } from 'src/app/models/Cliente';
+import { Region } from 'src/app/models/region';
 import { ClienteService } from 'src/app/services/cliente.service';
+import { ModalsService } from 'src/app/services/modals.service';
+import { RegionesService } from 'src/app/services/regiones.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,8 +23,12 @@ export class ClientesComponent implements OnInit {
   protected clientes: Cliente[] = [];
   protected isLoading: boolean = false;
 
+  public cliente: Cliente = new Cliente();
+  public regiones: Region[] = [];
+
   protected tableColumns: string[] = [
     'id',
+    'Imagen',
     'Nombre',
     'Apellido Paterno',
     'Apellido Materno',
@@ -32,6 +39,8 @@ export class ClientesComponent implements OnInit {
   ];
   constructor(
     private clientesService: ClienteService,
+    private regionesService: RegionesService,
+    private modalService: ModalsService,
     private spinner: NgxSpinnerService
   ) {}
   ngOnInit(): void {
@@ -45,6 +54,7 @@ export class ClientesComponent implements OnInit {
         if (resp) {
           this.spinner.hide();
         }
+        console.log(resp.content);
         this.pages = [];
         this.clientes = resp.content;
         this.total = resp.totalElements;
@@ -68,6 +78,28 @@ export class ClientesComponent implements OnInit {
         });
       },
     });
+  }
+
+  public updateTable(isSaved: boolean) {}
+  public loadRegiones(): void {
+    this.regionesService.getRegiones().subscribe({
+      next: (regiones) => {
+        this.regiones = regiones;
+      },
+      error: (err) => {
+        console.log(err);
+        Swal.fire({
+          title: 'Oops!',
+          text: 'Ha ocurrido un error al intentar cargar las regiones',
+          icon: 'error',
+        });
+      },
+    });
+  }
+  public openModal(): void {
+    this.cliente = new Cliente();
+    this.cliente.region.id = 1;
+    this.modalService.openModal('exampleModal');
   }
   public paginated(page: number) {
     if (this.actualPage !== page) {

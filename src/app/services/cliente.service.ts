@@ -23,6 +23,11 @@ export class ClienteService {
     return this.httpClient.get<ResponsePaginated>(url);
   }
 
+  public save(cliente: Cliente): Observable<CustomResponse> {
+    const url = `${this.apiUrl}/clientes/save`;
+    return this.httpClient.post(url, cliente);
+  }
+
   public update(cliente: Cliente): Observable<CustomResponse> {
     const url = `${this.apiUrl}/clientes/update/${cliente.id}`;
     return this.httpClient.put<CustomResponse>(url, cliente);
