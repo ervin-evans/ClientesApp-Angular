@@ -1,0 +1,15 @@
+.image-container {
+  border: 1px solid #000;
+}
+.image-container img {
+  width: 200px;
+  height: 200px;
+}
+.form-invalid {
+  box-shadow: 0 0 6px #dc3545 inset;
+  border: 1px solid #dc3545;
+}
+.form-valid {
+  box-shadow: 0 0 3px #198754 inset;
+  border: 1px solid #198754;
+}

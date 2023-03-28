@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Cliente } from 'src/app/models/Cliente';
 import { ClienteService } from 'src/app/services/cliente.service';
 import Swal from 'sweetalert2';
@@ -17,22 +18,33 @@ export class ClientesComponent implements OnInit {
   protected actualPage: number = 1;
   protected isLastPage: boolean = false;
   protected clientes: Cliente[] = [];
+  protected isLoading: boolean = false;
+
   protected tableColumns: string[] = [
     'id',
     'Nombre',
     'Apellido Paterno',
     'Apellido Materno',
+    'Region',
     'E-mail',
     'Creado',
+    'Acciones',
   ];
-  constructor(private clientesService: ClienteService) {}
+  constructor(
+    private clientesService: ClienteService,
+    private spinner: NgxSpinnerService
+  ) {}
   ngOnInit(): void {
     this.loadPaginatedClients(this.actualPage);
   }
 
   private loadPaginatedClients(page: number) {
+    this.spinner.show();
     this.clientesService.getPaginatedClients(page).subscribe({
       next: (resp) => {
+        if (resp) {
+          this.spinner.hide();
+        }
         this.pages = [];
         this.clientes = resp.content;
         this.total = resp.totalElements;
@@ -45,6 +57,9 @@ export class ClientesComponent implements OnInit {
         });
       },
       error: (err) => {
+        if (err) {
+          this.spinner.hide();
+        }
         console.log(err);
         Swal.fire({
           title: 'Error',
@@ -58,7 +73,6 @@ export class ClientesComponent implements OnInit {
     if (this.actualPage !== page) {
       this.actualPage = page;
       this.loadPaginatedClients(this.actualPage);
-      console.log('Vamos a realizar nueva peticion a la base de datos');
     }
   }
   public goToPreviosPage(previosPage: number) {

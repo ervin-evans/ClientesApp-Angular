@@ -18,7 +18,11 @@
     <div class="col-12 bg-white p-4">
       <h3 class="mb-3">Tabla de clientes - Total ({{ total }})</h3>
       <div class="table-responsive">
-        <app-table [tableColumns]="tableColumns" [items]="clientes"></app-table>
+        <app-table
+          [tableColumns]="tableColumns"
+          [items]="clientes"
+          [actualPage]="actualPage"
+        ></app-table>
         <div class="pagination-section">
           <app-pagination
             [pages]="pages"
