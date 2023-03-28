@@ -27,4 +27,9 @@ export class ClienteService {
     const url = `${this.apiUrl}/clientes/update/${cliente.id}`;
     return this.httpClient.put<CustomResponse>(url, cliente);
   }
+
+  public delete(clienteId: number): Observable<CustomResponse> {
+    const url = `${this.apiUrl}/clientes/delete/${clienteId}`;
+    return this.httpClient.delete<CustomResponse>(url);
+  }
 }

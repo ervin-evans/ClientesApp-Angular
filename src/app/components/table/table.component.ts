@@ -31,6 +31,42 @@ export class TableComponent implements OnInit {
   public getSelectedClient(cliente: Cliente): void {
     this.cliente = cliente;
   }
+  public delete(cliente: Cliente) {
+    console.log(cliente);
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: `Realmente deseas borrar a ${cliente.nombre} ${cliente.apellidoPaterno} ${cliente.apellidoMaterno}!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminalo!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.clientesService.delete(cliente.id).subscribe({
+          next: (resp) => {
+            console.log(resp);
+            this.items = this.items.filter((item) => {
+              return item.id !== cliente.id;
+            });
+            Swal.fire({
+              title: 'Eliminado!',
+              text: resp.msg,
+              icon: 'success',
+            });
+          },
+          error: (err) => {
+            Swal.fire({
+              title: 'Oops!',
+              text: `Ha ocurrido un error al intentar eliminar a ${cliente.nombre} ${cliente.apellidoPaterno}! .`,
+              icon: 'error',
+            });
+          },
+        });
+      }
+    });
+  }
 
   public updateTable(event: boolean): void {
     if (event) {
