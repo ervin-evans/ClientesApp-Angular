@@ -10,12 +10,8 @@
     <tr *ngFor="let item of items">
       <th scope="row">{{ item.id }}</th>
       <td>
-        <a href="">
-          <img
-            class="avatar"
-            [src]="'http://localhost:8080/clientes/image/uploads/' + item.foto"
-            [alt]="item.foto"
-          />
+        <a class="enlace" (click)="openModalUploadImage(item)">
+          <img class="avatar" [src]="imageUrl + item.foto" [alt]="" />
         </a>
       </td>
       <td>{{ item.nombre }}</td>
@@ -84,3 +80,15 @@
 <!--===============================================================================-->
 <!--MODAL DE UPLOAD IMAGE-->
 <!--===============================================================================-->
+<app-modal-upload-image
+  class="modal animate__animated animate__bounceIn"
+  id="modal-upload-image"
+  tabindex="-1"
+  aria-labelledby="upload-image"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  [cliente]="cliente"
+  [imageClientUrl]="imageUrl"
+>
+</app-modal-upload-image>

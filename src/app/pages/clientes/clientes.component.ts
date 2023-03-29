@@ -54,7 +54,7 @@ export class ClientesComponent implements OnInit {
         if (resp) {
           this.spinner.hide();
         }
-        console.log(resp.content);
+        //console.log(resp.content);
         this.pages = [];
         this.clientes = resp.content;
         this.total = resp.totalElements;

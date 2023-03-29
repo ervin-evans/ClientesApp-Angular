@@ -1,10 +1,4 @@
-import {
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewChecked,
-  Injectable,
-  OnInit,
-} from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 
 declare const window: any;
 @Injectable({

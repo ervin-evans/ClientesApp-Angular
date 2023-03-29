@@ -1,0 +1,65 @@
+<div class="modal-dialog modal-md modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5" id="exampleModalLabel">titulo del modal</h1>
+    </div>
+    <div class="modal-body">
+      <div class="container-fluid d-flex justify-content-center">
+        <figure>
+          <img
+            *ngIf="tempImageUrl"
+            [src]="tempImageUrl"
+            alt=""
+            class="image-modal"
+          />
+          <img
+            *ngIf="!tempImageUrl"
+            [src]="imageClientUrl + cliente.foto"
+            alt=""
+            class="image-modal"
+          />
+        </figure>
+      </div>
+      <input
+        #fileInput
+        type="file"
+        class="form-control my-3"
+        (change)="ngOnFileChange($event)"
+      />
+      <div class="progress" *ngIf="isImageUploading">
+        <div
+          class="progress-bar progress-bar-striped progress-bar-animated"
+          role="progressbar"
+          attr.aria-valuenow="{{ imageUploadProgress }}"
+          aria-label="Example with label"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          [ngStyle]="{ width: imageUploadProgress + '%' }"
+        >
+          {{ imageUploadProgress }}
+        </div>
+      </div>
+      <div
+        class="alert alert-info animate__animated animate__bounceIn text-center my-2"
+        role="alert"
+        *ngIf="messageInfo.length > 0"
+      >
+        {{ messageInfo }}
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="closeModal()">
+        {{ buttonTitle }}
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="uploadImage()"
+        [disabled]="!isImageChanged"
+      >
+        Guardar imagen
+      </button>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Cliente } from 'src/app/models/Cliente';
 import { Region } from 'src/app/models/region';
 import { ClienteService } from 'src/app/services/cliente.service';
+import { ModalsService } from 'src/app/services/modals.service';
 import { RegionesService } from 'src/app/services/regiones.service';
+import { environment } from 'src/environments/environment.development';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,10 +19,13 @@ export class TableComponent implements OnInit {
   @Input() public actualPage: number = 1;
   @Input() public cliente: Cliente = new Cliente();
 
+  protected imageUrl = environment.imageClientUrl;
+
   protected regiones: Region[] = [];
   constructor(
     private regionesService: RegionesService,
     private clientesService: ClienteService,
+    private modalService: ModalsService,
     private spinner: NgxSpinnerService
   ) {}
   ngOnInit(): void {
@@ -102,5 +107,9 @@ export class TableComponent implements OnInit {
         },
       });
     }
+  }
+  public openModalUploadImage(cliente: Cliente): void {
+    this.modalService.openModal('modal-upload-image');
+    this.cliente = cliente;
   }
 }
