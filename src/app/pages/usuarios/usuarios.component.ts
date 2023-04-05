@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Usuario } from 'src/app/models/Usuario';
+import { ModalsService } from 'src/app/services/modals.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 
@@ -34,19 +35,20 @@ export class UsuariosComponent implements OnInit {
 
   constructor(
     private usuariosService: UsuarioService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private modalService: ModalsService
   ) {}
   ngOnInit(): void {
     this.loadPaginatedUsers(this.actualPage);
   }
   private loadPaginatedUsers(page: number) {
     this.spinner.show();
-    this.usuariosService.getUsuariosPaginated(0).subscribe({
+    this.usuariosService.getUsuariosPaginated(page).subscribe({
       next: (resp) => {
         if (resp) {
           this.spinner.hide();
         }
-        console.log(resp.content);
+        this.pages = [];
         this.total = resp.totalElements;
         this.usuarios = resp.content;
         this.totalPages = resp.totalPages;
@@ -83,5 +85,9 @@ export class UsuariosComponent implements OnInit {
   public goToNextPage(nextPage: number) {
     this.actualPage = nextPage;
     this.loadPaginatedUsers(this.actualPage);
+  }
+  public openModalCreate(): void {
+    this.usuario = new Usuario();
+    this.modalService.openModal('modal-user');
   }
 }

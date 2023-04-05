@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment.development';
 import { CustomResponse } from '../interfaces/custom-response';
 import { ResponsePaginated } from '../interfaces/ResponsePaginated';
 import { Cliente } from '../models/Cliente';
-import { Region } from '../models/region';
+import { Region } from '../models/Region';
 
 @Injectable({
   providedIn: 'root',

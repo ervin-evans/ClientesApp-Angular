@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Cliente } from 'src/app/models/Cliente';
-import { Region } from 'src/app/models/region';
+import { Region } from 'src/app/models/Region';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { ModalsService } from 'src/app/services/modals.service';
 import { RegionesService } from 'src/app/services/regiones.service';

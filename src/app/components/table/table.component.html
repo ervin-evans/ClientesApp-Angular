@@ -98,7 +98,21 @@
 ></app-modal-client>
 
 <!--===============================================================================-->
-<!--MODAL DE UPLOAD IMAGE-->
+<!--MODAL DE USUARIOS -->
+<!--===============================================================================-->
+<app-modal-user
+  *ngIf="!isCliente()"
+  class="modal animate__animated animate__bounceIn"
+  id="modal-user"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+  [usuario]="itemRow"
+  (isUserUpdated)="updateTable($event)"
+></app-modal-user>
+
+<!--===============================================================================-->
+<!--MODAL DE UPLOAD IMAGE DE CLIENTES-->
 <!--===============================================================================-->
 <app-modal-upload-image
   *ngIf="isCliente()"

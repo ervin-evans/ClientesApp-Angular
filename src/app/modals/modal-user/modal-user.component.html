@@ -1,0 +1,195 @@
+<div class="modal-dialog modal-md modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5" id="exampleModalLabel">{{ modalTitle }}</h1>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="userForm" class="needs-validation" novalidate>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <!--=========================NOMBRE=======================-->
+              <input
+                type="text"
+                name="nombre"
+                formControlName="nombre"
+                class="form-control mb-3"
+                [ngClass]="errors('nombre') ? 'form-invalid' : ''"
+                placeholder="Nombre"
+              />
+              <div
+                *ngIf="errors('nombre')"
+                class="my-2 animated__animate animate__bounceIn"
+                [ngClass]="errors('nombre') ? 'text-danger' : ''"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-exclamation-octagon-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                  />
+                </svg>
+                El nombre debe tener un minimo de 3 caracteres
+              </div>
+              <!--=========================APELLIDO PATERNO=======================-->
+              <input
+                type="text"
+                name="apellidoPaterno"
+                formControlName="apellidoPaterno"
+                class="form-control mb-3"
+                [ngClass]="errors('apellidoPaterno') ? 'form-invalid' : ''"
+                placeholder="Apellido paterno"
+              />
+              <div
+                *ngIf="errors('apellidoPaterno')"
+                class="my-2 animated__animate animate__bounceIn"
+                [ngClass]="errors('apellidoPaterno') ? 'text-danger' : ''"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-exclamation-octagon-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                  />
+                </svg>
+                El apellido paterno debe tener un minimo de 3 caracteres
+              </div>
+              <!--=========================APELLIDO MATERNO=======================-->
+              <input
+                type="text"
+                name=""
+                id=""
+                formControlName="apellidoMaterno"
+                class="form-control mb-3"
+                [ngClass]="errors('apellidoMaterno') ? 'form-invalid' : ''"
+                placeholder="Apellido Materno"
+              />
+              <div
+                *ngIf="errors('apellidoMaterno')"
+                class="my-2 animated__animate animate__bounceIn"
+                [ngClass]="errors('apellidoMaterno') ? 'text-danger' : ''"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-exclamation-octagon-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                  />
+                </svg>
+                El apellido materno debe tener un minimo de 3 caracteres
+              </div>
+              <!--=========================USERNAME=======================-->
+              <input
+                type="text"
+                name="username"
+                formControlName="username"
+                class="form-control mb-3"
+                [ngClass]="errors('username') ? 'form-invalid' : ''"
+                placeholder="E-mail"
+              />
+              <div
+                *ngIf="errors('username')"
+                class="my-2 animated__animate animate__bounceIn"
+                [ngClass]="errors('username') ? 'text-danger' : ''"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-exclamation-octagon-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                  />
+                </svg>
+                El email debe tener un formato correcto
+              </div>
+              <!--=========================PASSWORD=======================-->
+              <input
+                type="password"
+                name="password"
+                placeholder="Passworwd"
+                class="form-control"
+                formControlName="password"
+              />
+              <div
+                *ngIf="errors('password')"
+                class="my-2 animated__animate animate__bounceIn"
+                [ngClass]="errors('password') ? 'text-danger' : ''"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-exclamation-octagon-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                  />
+                </svg>
+                El password es obligatorio
+              </div>
+              <!--=========================ENABLED=======================-->
+              <div class="form-check form-switch mt-3">
+                <label class="form-check-label" for="flexSwitchCheckChecked"
+                  >Activo
+                </label>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckChecked"
+                  formControlName="enabled"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+        Cancelar
+      </button>
+      <!--TODO: Verificar cliente-->
+      <button
+        *ngIf="usuario.id !== 0"
+        type="button"
+        class="btn btn-primary"
+        (click)="update()"
+        [disabled]="userForm.invalid"
+        data-bs-dismiss="modal"
+      >
+        Actualizar Usuario
+      </button>
+      <button
+        *ngIf="usuario.id === 0"
+        type="button"
+        class="btn btn-primary"
+        (click)="save()"
+        [disabled]="userForm.invalid"
+      >
+        Guardar Usuario
+      </button>
+    </div>
+  </div>
+</div>

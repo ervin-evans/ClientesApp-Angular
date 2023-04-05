@@ -1,4 +1,4 @@
-import { Region } from './region';
+import { Region } from './Region';
 
 export class Cliente {
   public id: number = 0;
@@ -6,7 +6,7 @@ export class Cliente {
   public apellidoPaterno = '';
   public apellidoMaterno = '';
   public email: string = '';
-  public foto: string = '';
+  public profileImage: string = '';
   public createdAt: string = '';
   public region: Region = new Region();
 }
