@@ -10,10 +10,9 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Cliente } from 'src/app/models/Cliente';
-import { Region } from 'src/app/models/region';
+import { Region } from 'src/app/models/Region';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { ModalsService } from 'src/app/services/modals.service';
 import Swal from 'sweetalert2';

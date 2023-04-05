@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Cliente } from 'src/app/models/Cliente';
-import { Region } from 'src/app/models/region';
+import { Region } from 'src/app/models/Region';
+import { Usuario } from 'src/app/models/Usuario';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { ModalsService } from 'src/app/services/modals.service';
 import { RegionesService } from 'src/app/services/regiones.service';
@@ -15,13 +16,13 @@ import Swal from 'sweetalert2';
 })
 export class TableComponent implements OnInit {
   @Input() public tableColumns: string[] = [];
-  @Input() public items: Cliente[] = [];
+  @Input() public items: any = [];
   @Input() public actualPage: number = 1;
-  @Input() public cliente: Cliente = new Cliente();
+  @Input() public itemRow: any;
 
-  protected imageUrl = environment.imageClientUrl;
-
+  protected imageUrl: string = '';
   protected regiones: Region[] = [];
+
   constructor(
     private regionesService: RegionesService,
     private clientesService: ClienteService,
@@ -29,28 +30,35 @@ export class TableComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {}
   ngOnInit(): void {
-    this.regionesService.getRegiones().subscribe({
-      next: (regiones) => {
-        this.regiones = regiones;
-      },
-      error: (err) => {
-        console.log(err);
-        Swal.fire({
-          title: 'Oops!',
-          text: 'Ha ocurrido un error al intentar cargar las regiones',
-          icon: 'error',
-        });
-      },
-    });
+    if (this.itemRow instanceof Cliente) {
+      this.itemRow = new Cliente();
+      this.imageUrl = environment.imageClientUrl;
+      this.regionesService.getRegiones().subscribe({
+        next: (regiones) => {
+          this.regiones = regiones;
+        },
+        error: (err) => {
+          console.log(err);
+          Swal.fire({
+            title: 'Oops!',
+            text: 'Ha ocurrido un error al intentar cargar las regiones',
+            icon: 'error',
+          });
+        },
+      });
+    } else if (this.itemRow instanceof Usuario) {
+      this.itemRow = new Usuario();
+      this.imageUrl = environment.imageUserUrl;
+    }
   }
 
-  public getSelectedClient(cliente: Cliente): void {
-    this.cliente = cliente;
+  public getSelectedItem(item: any): void {
+    this.itemRow = item;
   }
-  public delete(cliente: Cliente) {
+  public delete(selectedItem: any) {
     Swal.fire({
       title: 'Estas seguro?',
-      text: `Realmente deseas borrar a ${cliente.nombre} ${cliente.apellidoPaterno} ${cliente.apellidoMaterno}!`,
+      text: `Realmente deseas borrar a ${selectedItem.nombre} ${selectedItem.apellidoPaterno} ${selectedItem.apellidoMaterno}!`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -59,11 +67,11 @@ export class TableComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.clientesService.delete(cliente.id).subscribe({
+        this.clientesService.delete(selectedItem.id).subscribe({
           next: (resp) => {
             console.log(resp);
-            this.items = this.items.filter((item) => {
-              return item.id !== cliente.id;
+            this.items = this.items.filter((item: any) => {
+              return item.id !== selectedItem.id;
             });
             Swal.fire({
               title: 'Eliminado!',
@@ -74,7 +82,7 @@ export class TableComponent implements OnInit {
           error: (err) => {
             Swal.fire({
               title: 'Oops!',
-              text: `Ha ocurrido un error al intentar eliminar a ${cliente.nombre} ${cliente.apellidoPaterno}! .`,
+              text: `Ha ocurrido un error al intentar eliminar a ${selectedItem.nombre} ${selectedItem.apellidoPaterno}! .`,
               icon: 'error',
             });
           },
@@ -108,8 +116,12 @@ export class TableComponent implements OnInit {
       });
     }
   }
-  public openModalUploadImage(cliente: Cliente): void {
+  public openModalUploadImage(cliente: any): void {
     this.modalService.openModal('modal-upload-image');
-    this.cliente = cliente;
+    this.itemRow = cliente;
+  }
+
+  public isCliente(): boolean {
+    return this.itemRow instanceof Cliente;
   }
 }

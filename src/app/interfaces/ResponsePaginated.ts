@@ -1,9 +1,10 @@
 import { Cliente } from '../models/Cliente';
+import { Usuario } from '../models/Usuario';
 import { Pageable } from './Pageable';
 import { Sort } from './Sort';
 
 export interface ResponsePaginated {
-  content: Cliente[];
+  content: any[];
   pageable: Pageable;
   last: boolean;
   totalPages: number;

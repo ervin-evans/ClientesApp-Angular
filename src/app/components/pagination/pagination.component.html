@@ -1,7 +1,11 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
     <li class="page-item" [ngClass]="actualPageInner <= 1 ? 'disabled' : ''">
-      <a class="page-link active" (click)="goToPreviosPage()" tabindex="-1"
+      <a
+        class="page-link active"
+        (click)="goToPreviosPage()"
+        tabindex="-1"
+        title="Ir a la pagina anterior"
         >Anterior</a
       >
     </li>
@@ -14,7 +18,12 @@
       >
     </li>
     <li class="page-item" [ngClass]="isLastPage ? 'disabled' : ''">
-      <a class="page-link active" (click)="goToNextPage()">Siguiente</a>
+      <a
+        class="page-link active"
+        (click)="goToNextPage()"
+        title="Ir a la pagina siguiente"
+        >Siguiente</a
+      >
     </li>
   </ul>
 </nav>

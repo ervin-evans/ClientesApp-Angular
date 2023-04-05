@@ -11,24 +11,43 @@
       <th scope="row">{{ item.id }}</th>
       <td>
         <a class="enlace" (click)="openModalUploadImage(item)">
-          <img class="avatar" [src]="imageUrl + item.foto" [alt]="" />
+          <img
+            class="avatar"
+            [src]="
+              item.profileImage.length > 0
+                ? imageUrl + item.profileImage
+                : imageUrl + 'no-image.png'
+            "
+            [alt]="item.foto"
+          />
         </a>
       </td>
       <td>{{ item.nombre }}</td>
       <td>{{ item.apellidoPaterno }}</td>
       <td>{{ item.apellidoMaterno }}</td>
-      <td>
+      <td *ngIf="isCliente()">
         {{ item.region.nombre }}
       </td>
-      <td>{{ item.email }}</td>
-      <td>{{ item.createdAt | date : "dd-MM-yyyy" }}</td>
+      <!--Si es  cliente-->
+      <td *ngIf="isCliente()">{{ item.email }}</td>
+      <td *ngIf="isCliente()">{{ item.createdAt | date : "dd-MM-yyyy" }}</td>
+      <!--Si es usuario-->
+      <td *ngIf="!isCliente()">
+        {{ item.username }}
+      </td>
+      <td *ngIf="!isCliente()">
+        <span *ngIf="item.enabled === 1" class="badge text-bg-primary">
+          Si
+        </span>
+        <span *ngIf="item.enabled === 0" class="badge text-bg-danger">No</span>
+      </td>
       <td class="text-center">
         <a
           class="mx-3 enlace"
           title="Editar"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
-          (click)="getSelectedClient(item)"
+          (click)="getSelectedItem(item)"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -67,12 +86,13 @@
 <!--MODAL DE CLIENTES-->
 <!--===============================================================================-->
 <app-modal-client
+  *ngIf="isCliente()"
   class="modal animate__animated animate__bounceIn"
   id="exampleModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
-  [cliente]="cliente"
+  [cliente]="itemRow"
   [regiones]="regiones"
   (isClienteUpdated)="updateTable($event)"
 ></app-modal-client>
@@ -81,6 +101,7 @@
 <!--MODAL DE UPLOAD IMAGE-->
 <!--===============================================================================-->
 <app-modal-upload-image
+  *ngIf="isCliente()"
   class="modal animate__animated animate__bounceIn"
   id="modal-upload-image"
   tabindex="-1"
@@ -88,7 +109,7 @@
   aria-hidden="true"
   data-bs-backdrop="static"
   data-bs-keyboard="false"
-  [cliente]="cliente"
+  [cliente]="itemRow"
   [imageClientUrl]="imageUrl"
 >
 </app-modal-upload-image>
